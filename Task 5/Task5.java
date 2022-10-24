@@ -1,7 +1,11 @@
 import java.io.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-
+/*TODO
+ * WIP File handling and logic not in the same function, preferably in other class !!!arrayList for dynamic solution!!!
+ * Change names to more aprioprate (convertDate does not convert Dates etc)
+ * DONE Modify constructor of MyData, so empty object could be initialised
+ */
 public class Task5 {
     public static void main(String[] args) {
         convertDate();
@@ -15,7 +19,7 @@ public class Task5 {
             PrintWriter outputFile = new PrintWriter(bw);
             BufferedReader reader = new BufferedReader(new FileReader(inputFile));
             String inputLine;
-            MyData previousData = new MyData("", -1);
+            MyData previousData = new MyData();
             while ((inputLine = reader.readLine()) != null) {
                 int patternID = findPattern(inputLine);
                 if(patternID != -1) {
@@ -30,9 +34,11 @@ public class Task5 {
             reader.close();
             outputFile.close();
         } catch (FileNotFoundException inputFileError) {
-            System.out.println("Input file not found");
+            System.err.println("Input file not found");
+            inputFileError.printStackTrace();
         } catch (IOException outputFileError) {
-            System.out.println("Output file error");
+            System.err.println("Output file error");
+            outputFileError.printStackTrace();
         }
     }
 
@@ -90,12 +96,14 @@ class MyData {
                 year = Integer.parseInt(splittedDate[1].substring(6, 10));
                 weekday = splittedDate[0];
                 break;
-            default:
-                day = 0;
-                month = 0;
-                year = 0;
-                weekday = "";
         }
+    }
+
+    MyData() {
+        day = 0;
+        month = 0;
+        year = 0;
+        weekday = "";
     }
 
     public int getDay() {
@@ -114,7 +122,51 @@ class MyData {
         return weekday;
     }
 
-    void printData() {
-        System.out.println("day = " + day + ", month = " + month + ", year = " + year +", weekday = " + weekday +".");
+    public String toString() {
+        return "day = " + day + ", month = " + month + ", year = " + year +", weekday = " + weekday +".";
+    }
+}
+
+class textFileHandler {
+    //private String inputFileName;
+    //private String outputFileName;
+
+    public static String[] getLines(String inputFilePathname) {
+        String[] Lines = new String[50];
+        String Line;
+        try {
+            File inputFile = new File(inputFilePathname);
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            int lineCounter = 0;
+
+            while ((Line = reader.readLine()) != null) {
+                Lines[lineCounter] = Line;
+            }
+            reader.close();
+        } catch (FileNotFoundException inputFileError) {
+            System.err.println("Input file not found");
+            inputFileError.printStackTrace();
+        } catch (IOException outputFileError) {
+            System.err.println("Output file error");
+            outputFileError.printStackTrace();
+        }
+        return Lines;
+    }
+
+    public static String getLine (String inputFilePathname) {
+        String Line = null;
+        try {
+            File inputFile = new File(inputFilePathname);
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            Line = reader.readLine();
+            reader.close();
+        } catch (FileNotFoundException inputFileError) {
+            System.err.println("Input file not found");
+            inputFileError.printStackTrace();
+        } catch (IOException outputFileError) {
+            System.err.println("Output file error");
+            outputFileError.printStackTrace();
+        }
+        return Line;
     }
 }
