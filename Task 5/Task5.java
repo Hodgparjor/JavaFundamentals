@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.arrayList;
 /*TODO
  * WIP File handling and logic not in the same function, preferably in other class !!!arrayList for dynamic solution!!!
  * Change names to more aprioprate (convertDate does not convert Dates etc)
@@ -26,7 +27,8 @@ public class Task5 {
                     MyData newData = new MyData(inputLine, patternID);
                     if (!areDatesTheSame(newData, previousData)) {
                         outputFile.println("day = " + newData.getDay() + ", month = " + newData.getMonth() + ", year = "
-                                           + newData.getYear() +", weekday = " + newData.getWeekday() +".");
+                        String newDataString = "day = " + newData.getDay() + ", month = " + newData.getMonth() + ", year = "
+                        + newData.getYear() +", weekday = " + newData.getWeekday() +"."
                         previousData = newData;
                     }
                 }
@@ -131,16 +133,16 @@ class textFileHandler {
     //private String inputFileName;
     //private String outputFileName;
 
-    public static String[] getLines(String inputFilePathname) {
-        String[] Lines = new String[50];
-        String Line;
+    public static ArrayList<String> getLines(String inputFilePathname) {
+        ArrayList<String> lines = new ArrayList<String>();
+        String line;
         try {
             File inputFile = new File(inputFilePathname);
             BufferedReader reader = new BufferedReader(new FileReader(inputFile));
             int lineCounter = 0;
 
             while ((Line = reader.readLine()) != null) {
-                Lines[lineCounter] = Line;
+                lines.add(line);
             }
             reader.close();
         } catch (FileNotFoundException inputFileError) {
@@ -150,23 +152,18 @@ class textFileHandler {
             System.err.println("Output file error");
             outputFileError.printStackTrace();
         }
-        return Lines;
+        return lines;
     }
 
-    public static String getLine (String inputFilePathname) {
-        String Line = null;
+    public static String writeLine (String inputFilePathname, String newLine) {
         try {
-            File inputFile = new File(inputFilePathname);
-            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-            Line = reader.readLine();
-            reader.close();
-        } catch (FileNotFoundException inputFileError) {
-            System.err.println("Input file not found");
-            inputFileError.printStackTrace();
-        } catch (IOException outputFileError) {
-            System.err.println("Output file error");
-            outputFileError.printStackTrace();
+            FileWriter fw = new FileWriter("MyData.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter outputFile = new PrintWriter(bw);
+            outputFile.println(newLine);
+        } catch() {
+
         }
-        return Line;
+
     }
 }
