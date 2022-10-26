@@ -26,7 +26,6 @@ public class Task5 {
                 if(patternID != -1) {
                     MyData newData = new MyData(inputLine, patternID);
                     if (!areDatesTheSame(newData, previousData)) {
-                        outputFile.println("day = " + newData.getDay() + ", month = " + newData.getMonth() + ", year = "
                         String newDataString = "day = " + newData.getDay() + ", month = " + newData.getMonth() + ", year = "
                         + newData.getYear() +", weekday = " + newData.getWeekday() +"."
                         previousData = newData;
