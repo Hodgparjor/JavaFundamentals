@@ -2,11 +2,6 @@ import java.io.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.ArrayList;
-/* TO DO:
- * DONE File handling and logic not in the same function, preferably in other class !!!arrayList for dynamic solution!!!
- * DONE Change names to more aprioprate (convertDate does not convert Dates etc)
- * DONE add antoher constructor of MyData, so empty object could be initialised
- */
 
 public class Task5 {
     public static void main(String[] args) {
@@ -122,14 +117,14 @@ class textFileReader {
     private static BufferedReader reader;
     textFileReader(String filePathName) {
         try {
-            File file = new File(filePathName);
-            reader = new BufferedReader(new FileReader(file));
+            if(filePathName != null) {
+                File file = new File(filePathName);
+                reader = new BufferedReader(new FileReader(file));
+            }
+            
         } catch(IOException outputFileError) {
             System.err.println("input file IO error");
             outputFileError.printStackTrace();
-        } catch (NullPointerException outputFilePathMissing) {
-            System.err.println("input file NullPointer error");
-            outputFilePathMissing.printStackTrace();
         }
     }
 
@@ -162,16 +157,15 @@ class textFileWriter {
 
     textFileWriter(String filePathName) {
         try {
-            File file = new File(filePathName);
-            FileWriter fw = new FileWriter(file);
-            BufferedWriter bw = new BufferedWriter(fw);
-            writer = new PrintWriter(bw);
+            if(filePathName != null) {
+                File file = new File(filePathName);
+                FileWriter fw = new FileWriter(file);
+                BufferedWriter bw = new BufferedWriter(fw);
+                writer = new PrintWriter(bw);
+            }
         } catch(IOException outputFileError) {
             System.err.println("Output file error");
             outputFileError.printStackTrace();
-        } catch (NullPointerException outputFilePathMissing) {
-            System.err.println("Output file error");
-            outputFilePathMissing.printStackTrace();
         }
     }
 
