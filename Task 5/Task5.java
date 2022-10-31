@@ -2,53 +2,30 @@ import java.io.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.ArrayList;
-/*TODO
- * WIP File handling and logic not in the same function, preferably in other class !!!arrayList for dynamic solution!!!
- * Change names to more aprioprate (convertDate does not convert Dates etc)
- * DONE Modify constructor of MyData, so empty object could be initialised
- */
+
 public class Task5 {
     public static void main(String[] args) {
         processData();
     }
 
     public static void processData() {
-            // File inputFile = new File("InputData.txt");
-            // FileWriter fw = new FileWriter("MyData.txt");
-            // BufferedWriter bw = new BufferedWriter(fw);
-            // PrintWriter outputFile = new PrintWriter(bw);
-            // BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-        textFileHandler file = new textFileHandler();
-        ArrayList<String> inputLines = file.getLines("InputData.txt");
+        textFileReader inputFileReader = new textFileReader("Task 5\\InputData.txt");
+        textFileWriter outputFileWriter = new textFileWriter("Task 5\\myData.txt");
+
         MyData previousData = new MyData();
+        ArrayList<String> inputLines = inputFileReader.getLines();
         for(int i = 0; i < inputLines.size(); i++) {
             int patternID = findPattern(inputLines.get(i));
             if(patternID != -1) {
                 MyData newData = new MyData(inputLines.get(i), patternID);
                 if (!areDatesTheSame(newData, previousData)) {
-                        // String newDataString = "day = " + newData.getDay() + ", month = " + newData.getMonth() + ", year = "
-                        // + newData.getYear() +", weekday = " + newData.getWeekday() +".";
-                    textFileHandler.writeLine("myData.txt", newData.toString());
+                    outputFileWriter.writeLine(newData.toString());
                     previousData = newData;
                 }
             }
         }
-                
-        //         if(patternID != -1) {
-        //             MyData newData = new MyData(inputLine, patternID);
-                    
-        //             }
-        //         }
-            
-        //     reader.close();
-        //     outputFile.close();
-        // } catch (FileNotFoundException inputFileError) {
-        //     System.err.println("Input file not found");
-        //     inputFileError.printStackTrace();
-        // } catch (IOException outputFileError) {
-        //     System.err.println("Output file error");
-        //     outputFileError.printStackTrace();
-        // }
+        outputFileWriter.closeIO();
+        inputFileReader.closeIO();
     }
 
     public static boolean areDatesTheSame (MyData newData, MyData previousData) {
@@ -136,44 +113,67 @@ class MyData {
     }
 }
 
-class textFileHandler {
-    //private String inputFileName;
-    //private String outputFileName;
+class textFileReader {
+    private static BufferedReader reader;
+    textFileReader(String filePathName) {
+        try {
+            if(filePathName != null) {
+                File file = new File(filePathName);
+                reader = new BufferedReader(new FileReader(file));
+            }
+            
+        } catch(IOException outputFileError) {
+            System.err.println("input file IO error");
+            outputFileError.printStackTrace();
+        }
+    }
 
-    public ArrayList<String> getLines(String inputFilePathname) {
+    public ArrayList<String> getLines() {
         ArrayList<String> lines = new ArrayList<String>();
         String line;
         try {
-            File inputFile = new File(inputFilePathname);
-            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-
             while ((line = reader.readLine()) != null) {
                 lines.add(line);
             }
-            reader.close();
-        } catch (FileNotFoundException inputFileError1) {
-            System.err.println("Input file not found");
-            inputFileError1.printStackTrace();
-        } catch (IOException inputFileError2) {
+        } catch (IOException inputFileError) {
             System.err.println("input file IO error");
-            inputFileError2.printStackTrace();
-        } catch (NullPointerException inputFileError3) {
-            System.err.println("input file null pointer error");
-            inputFileError3.printStackTrace();
+            inputFileError.printStackTrace();
         }
         return lines;
     }
 
-    public static void writeLine (String outputFilePathname, String newLine) {
+    public void closeIO() {
+        try{
+            reader.close();
+        } catch (IOException fileClosingError) {
+            System.err.println("error when closing file");
+            fileClosingError.printStackTrace();
+        }
+    }
+}
+
+class textFileWriter {
+    private static PrintWriter writer;
+
+    textFileWriter(String filePathName) {
         try {
-            FileWriter fw = new FileWriter(outputFilePathname);
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter outputFile = new PrintWriter(bw);
-            outputFile.println(newLine);
-            outputFile.close();
+            if(filePathName != null) {
+                File file = new File(filePathName);
+                FileWriter fw = new FileWriter(file);
+                BufferedWriter bw = new BufferedWriter(fw);
+                writer = new PrintWriter(bw);
+            }
         } catch(IOException outputFileError) {
             System.err.println("Output file error");
             outputFileError.printStackTrace();
         }
+    }
+
+    public void writeLine (String newLine) {
+        writer.println(newLine);
+    }
+
+    public void closeIO() {
+        writer.close();
     }
 }

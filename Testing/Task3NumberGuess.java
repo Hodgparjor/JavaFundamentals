@@ -26,6 +26,7 @@ public class Task3NumberGuess {
                 correctGuess = true;
             }
         }
+        input.close();
         System.exit(0);
     }
 }
