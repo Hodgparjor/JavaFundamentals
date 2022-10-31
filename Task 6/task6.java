@@ -64,6 +64,30 @@ abstract class TelephoneEntry {
     public TelephoneNumber getTelephoneNumber() {
         return telephoneNumber;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public void setTelephoneNumber(TelephoneNumber telephoneNumber){
+        this.telephoneNumber = telephoneNumber;
+    }
 }
 
 // Class Person has to contain information about the name, last name, and address (including TelephoneNumber)
