@@ -25,6 +25,11 @@ public class task6 {
         directory.put(c1.getTelephoneNumber(), c1);
         directory.put(c2.getTelephoneNumber(), c2);
         System.out.println(directory);
+        Iterator<Map.Entry<TelephoneNumber, TelephoneEntry>> it = directory.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<TelephoneNumber, TelephoneEntry> pair = it.next();
+            pair.getValue().description();
+        }
     }
 }
 
