@@ -9,14 +9,11 @@ public class task6 {
         Person p3 = new Person("Kretek", "Pepik", "Brno", "Syrowa",
                        "8", "88-747", new TelephoneNumber("420", "884668101"));
         Company c1 = new Company("Kredkopol", "Lodz", "Zgierska", "294A",
-                                 "90-525", new TelephoneNumber("48", "123456789"));
+                           "90-525", new TelephoneNumber("48", "123456789"));
         Company c2 = new Company("Durr", "Hamburg", "Kleine-strasse",
                          "77", "11-888", new TelephoneNumber("42", "096964383"));
-        // p1.description();
-        // p2.description();
-        // p3.description();
-        // c1.description();
-        // c2.description();
+        Company c3 = new Company("Wollololo", "Danzig", "Zurawiowa", "148C",
+                           "38-725", new TelephoneNumber("+48", "135790864"));
 
         TreeMap<TelephoneNumber, TelephoneEntry> directory = new TreeMap<TelephoneNumber, TelephoneEntry>();
         directory.put(p1.getTelephoneNumber(), p1);
@@ -24,10 +21,10 @@ public class task6 {
         directory.put(p3.getTelephoneNumber(), p3);
         directory.put(c1.getTelephoneNumber(), c1);
         directory.put(c2.getTelephoneNumber(), c2);
-        System.out.println(directory);
-        Iterator<Map.Entry<TelephoneNumber, TelephoneEntry>> it = directory.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<TelephoneNumber, TelephoneEntry> pair = it.next();
+        directory.put(c3.getTelephoneNumber(), c3);
+        Iterator<Map.Entry<TelephoneNumber, TelephoneEntry>> iterator = directory.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<TelephoneNumber, TelephoneEntry> pair = iterator.next();
             pair.getValue().description();
         }
     }
