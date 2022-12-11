@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class task6 {
+public class TelephoneBook {
     public static void main(String[] arg) {
         Person p1 = new Person("Marek", "Sczesny", "Kijanki Male", "Klasztorna",
                        "29/31", "12-345", new TelephoneNumber("48", "501506353"));
@@ -22,6 +22,7 @@ public class task6 {
         directory.put(c1.getTelephoneNumber(), c1);
         directory.put(c2.getTelephoneNumber(), c2);
         directory.put(c3.getTelephoneNumber(), c3);
+
         Iterator<Map.Entry<TelephoneNumber, TelephoneEntry>> iterator = directory.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<TelephoneNumber, TelephoneEntry> pair = iterator.next();
@@ -144,15 +145,15 @@ class Person extends TelephoneEntry {
             && this.getStreetNumber() != null && this.getPostalCode() != null && this.getTelephoneNumber() != null
             && this.getTelephoneNumber().getCountryCode() != null && this.getTelephoneNumber().getLocalNumber() != null) {
             System.out.println("------------------------------\n"
-                            + "           PERSON\n"
-                            + "Name: " + this.getName() + "\n"
-                            + "Surname: " + surname + "\n"
-                            + "Addres:\n"
-                            + "  City: " + this.getCity() + "\n"
-                            + "  Street: " + this.getStreet() + " " + this.getStreetNumber() + "\n"
-                            + "  Postal code: " + this.getPostalCode() + "\n"
-                            + "  Telephone: +" + this.getTelephoneNumber().getCountryCode() + " " + this.getTelephoneNumber().getLocalNumber()
-                            + "\n------------------------------");
+                             + "           PERSON\n"
+                             + "Name: " + this.getName() + "\n"
+                             + "Surname: " + surname + "\n"
+                             + "Addres:\n"
+                             + "  City: " + this.getCity() + "\n"
+                             + "  Street: " + this.getStreet() + " " + this.getStreetNumber() + "\n"
+                             + "  Postal code: " + this.getPostalCode() + "\n"
+                             + "  Telephone: +" + this.getTelephoneNumber().getCountryCode() + " " + this.getTelephoneNumber().getLocalNumber()
+                             + "\n------------------------------");
         }
     }
 
@@ -191,14 +192,14 @@ class Company extends TelephoneEntry {
             && this.getStreetNumber() != null && this.getPostalCode() != null && this.getTelephoneNumber() != null
             && this.getTelephoneNumber().getCountryCode() != null && this.getTelephoneNumber().getLocalNumber() != null) {
             System.out.println("------------------------------\n"
-                            + "           COMPANY\n"
-                            + "Name: " + this.getName() + "\n"
-                            + "Addres:\n"
-                            + "  City: " + this.getCity() + "\n"
-                            + "  Street: " + this.getStreet() + " " + this.getStreetNumber() + "\n"
-                            + "  Postal code: " + this.getPostalCode() + "\n"
-                            + "  Telephone Number: +" + this.getTelephoneNumber().getCountryCode() + " " + this.getTelephoneNumber().getLocalNumber()
-                            + "\n------------------------------");
+                             + "           COMPANY\n"
+                             + "Name: " + this.getName() + "\n"
+                             + "Addres:\n"
+                             + "  City: " + this.getCity() + "\n"
+                             + "  Street: " + this.getStreet() + " " + this.getStreetNumber() + "\n"
+                             + "  Postal code: " + this.getPostalCode() + "\n"
+                             + "  Telephone Number: +" + this.getTelephoneNumber().getCountryCode() + " " + this.getTelephoneNumber().getLocalNumber()
+                             + "\n------------------------------");
         }
     }
 }
