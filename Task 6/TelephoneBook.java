@@ -1,5 +1,5 @@
 import java.util.*;
-
+//approved 100%
 public class TelephoneBook {
     public static void main(String[] arg) {
         Person p1 = new Person("Marek", "Sczesny", "Kijanki Male", "Klasztorna",
