@@ -43,24 +43,18 @@ public class MyVectorList {
         }
     }
 
-    public String[] prepareExceptionData(MyVector vector1, MyVector vector2, int vectorIndex) {
-        String[] exceptionData = new String[4];
-        exceptionData[0] = Integer.toString(vector1.getData().size());
-        exceptionData[1] = Integer.toString(vectorIndex + 1);
-        exceptionData[2] = Integer.toString(vectorIndex + 2);
-        if (vector1.getData().size() < vector2.getData().size()) {
-            exceptionData[3] = "smaller";
-        } else {
-            exceptionData[3] = "bigger";
+    public ArrayList<Integer> getVectorsLengthsArray() {
+        ArrayList<Integer> vectorsLengths = new ArrayList<Integer>();
+        for (int index = 0; index < this.vectors.size(); index++) {
+            vectorsLengths.add(this.vectors.get(index).getData().size());
         }
-        return exceptionData;
+        return vectorsLengths;
     }
 
     public void checkVectorsLengths() throws DifferentVectorsLengthsException {
         for (int vectorIndex = 0; vectorIndex < this.vectors.size() - 1; vectorIndex++) {
             if (this.vectors.get(vectorIndex).getData().size() != this.vectors.get(vectorIndex + 1).getData().size()) {
-                String[] exceptionData = prepareExceptionData(this.vectors.get(vectorIndex), this.vectors.get(vectorIndex + 1), vectorIndex);
-                throw new DifferentVectorsLengthsException("Vectors have diffrent sizes", exceptionData);
+                throw new DifferentVectorsLengthsException("Vectors have diffrent sizes", this.getVectorsLengthsArray());
             }
         }
     }

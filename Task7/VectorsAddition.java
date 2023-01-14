@@ -21,8 +21,9 @@ public class VectorsAddition {
                 input.close();
             } catch (DifferentVectorsLengthsException e) {
                 System.out.println("\n" + e.getMessage());
-                System.out.println("Length of vector " + e.getExceptionData()[1] + " is " + e.getExceptionData()[0]);
-                System.out.println("Length of vector " + e.getExceptionData()[1] + " is " + e.getExceptionData()[3] + " than length of vector " + e.getExceptionData()[2] + "\n");
+                for (int index = 0; index < e.getVectorLengths().size(); index++) {
+                    System.out.println("Length of vector " + (index + 1) + " is: " + e.getVectorLengths().get(index));
+                }
                 vectorList.readVectors(input);
             }
         }

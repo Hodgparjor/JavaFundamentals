@@ -1,14 +1,16 @@
 package Task7;
 
-public class DifferentVectorsLengthsException extends Exception {
-    private String[] exceptionData;
+import java.util.*;
 
-    public DifferentVectorsLengthsException(String message, String[] exceptionData) {
+public class DifferentVectorsLengthsException extends Exception {
+    private ArrayList<Integer> vectorLengths;
+
+    public DifferentVectorsLengthsException(String message, ArrayList<Integer> vectorLengths) {
         super(message);
-        this.exceptionData = exceptionData;
+        this.vectorLengths = vectorLengths;
     }
 
-    public String[] getExceptionData() {
-        return this.exceptionData;
+    public ArrayList<Integer> getVectorLengths() {
+        return this.vectorLengths;
     }
 }
