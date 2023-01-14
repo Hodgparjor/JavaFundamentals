@@ -25,7 +25,6 @@ class StatementMatcher {
         this.statementParameters = new ArrayList<String>();
         if (selectMatcher.matches()) {
             this.statementType = "SELECT";
-            System.out.println("\nCondition: " + selectMatcher.group(3));
             this.statementParameters.add(selectMatcher.group(2)); // tableName
             this.statementParameters.add(selectMatcher.group(1)); // columns
             this.statementParameters.add(selectMatcher.group(3)); // conditions

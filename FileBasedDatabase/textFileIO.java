@@ -12,7 +12,7 @@ class textFileReader {
             }
             
         } catch(IOException outputFileError) {
-            System.err.println("input file IO error");
+            System.err.println("Input file error, table might not exist.");
             outputFileError.printStackTrace();
         }
     }
@@ -48,7 +48,7 @@ class textFileWriter {
         try {
             if(filePathName != null) {
                 File file = new File(filePathName);
-                FileWriter fw = new FileWriter(file);
+                FileWriter fw = new FileWriter(file, true);
                 BufferedWriter bw = new BufferedWriter(fw);
                 writer = new PrintWriter(bw);
             }
@@ -59,7 +59,7 @@ class textFileWriter {
     }
 
     public void writeLine (String newLine) {
-        writer.println(newLine);
+        writer.print(newLine);
     }
 
     public void closeIO() {
