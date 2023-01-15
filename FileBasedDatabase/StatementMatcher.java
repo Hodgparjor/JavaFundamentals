@@ -13,7 +13,6 @@ class StatementMatcher {
     private static final Pattern UPDATE_PATTERN = Pattern.compile(UPDATE_REGEX);
     private static final Pattern DELETE_PATTERN = Pattern.compile(DELETE_REGEX);
 
-
     private String statementType;
     private ArrayList<String> statementParameters;
 
@@ -23,6 +22,7 @@ class StatementMatcher {
         Matcher updateMatcher = UPDATE_PATTERN.matcher(insertedStatement);
         Matcher deleteMatcher = DELETE_PATTERN.matcher(insertedStatement);
         this.statementParameters = new ArrayList<String>();
+
         if (selectMatcher.matches()) {
             this.statementType = "SELECT";
             this.statementParameters.add(selectMatcher.group(2)); // tableName
@@ -42,7 +42,7 @@ class StatementMatcher {
             this.statementParameters.add(deleteMatcher.group(1)); // tableName
             this.statementParameters.add(deleteMatcher.group(2)); // condition
         } else {
-            throw new InvalidSQLStatementException("Inserted SQL statement is invalid.", insertedStatement);
+            throw new InvalidSQLStatementException("Error: Inserted SQL statement is invalid.", insertedStatement);
         }
     }
 

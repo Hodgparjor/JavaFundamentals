@@ -5,7 +5,7 @@ import java.util.*;
 public class FileDatabase {
     public static void main(String[] args) {
         Scanner querySQL = new Scanner(System.in);
-        System.out.print("Enter SQL statement: ");
+        System.out.print("\nEnter SQL statement: ");
         String insertedLine = querySQL.nextLine();
         insertedLine.trim();
 
@@ -19,7 +19,11 @@ public class FileDatabase {
                     String conditions = parameters.get(2);
 
                     SelectStatement select = new SelectStatement(tableName, columns, conditions);
-                    select.executeStatement();
+                    try {
+                        select.executeStatement();
+                    } catch (InvalidSQLStatementException e) {
+                        System.err.println("\n" + e.getMessage());
+                    }
                 } else if (matcherSQL.getStatementType() == "INSERT") {
                     String values = parameters.get(1);
 
@@ -39,10 +43,10 @@ public class FileDatabase {
                     delete.executeStatement();
                 }
             } catch (InvalidSQLStatementException e) {
-                // TO DO
+                System.err.println(e.getMessage());
             }
 
-            System.out.print("Enter SQL statement: ");
+            System.out.print("\nEnter SQL statement: ");
             insertedLine = querySQL.nextLine();
         }
         querySQL.close();
