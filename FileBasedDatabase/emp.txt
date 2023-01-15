@@ -1,0 +1,5 @@
+id,name,job,salary
+1,Alex,Engineer,1250
+2,Mark,Manager,2000
+3,Tobias,Manager,2950
+4,Michael,Janitor,860

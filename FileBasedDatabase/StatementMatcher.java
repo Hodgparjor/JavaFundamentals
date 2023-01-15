@@ -8,10 +8,14 @@ class StatementMatcher {
     private static final String INSERT_REGEX = "^INSERT\\s+INTO\\s+(\\S+)\\s+VALUES\\s+(.+?)$";
     private static final String UPDATE_REGEX = "^UPDATE\\s+(\\S+)\\s+SET\\s+(\\S+)\\s*=\\s*(\\S+)(?:\\s+WHERE\\s+)?(.+?)?$";
     private static final String DELETE_REGEX = "^DELETE\\s+FROM\\s+(\\S+)(?:\\s+WHERE\\s+)?(.+?)?$";
+    private static final String CREATE_REGEX = "^CREATE\\s+TABLE\\s+(\\S+)\\s+\\((.+?)\\)$";
+    private static final String DROP_REGEX = "^DROP\\s+TABLE\\s+(\\S+)$";
     private static final Pattern SELECT_PATTERN = Pattern.compile(SELECT_REGEX);
     private static final Pattern INSERT_PATTERN = Pattern.compile(INSERT_REGEX);
     private static final Pattern UPDATE_PATTERN = Pattern.compile(UPDATE_REGEX);
     private static final Pattern DELETE_PATTERN = Pattern.compile(DELETE_REGEX);
+    private static final Pattern CREATE_PATTERN = Pattern.compile(CREATE_REGEX);
+    private static final Pattern DROP_PATTERN = Pattern.compile(DROP_REGEX);
 
     private String statementType;
     private ArrayList<String> statementParameters;
@@ -21,6 +25,8 @@ class StatementMatcher {
         Matcher insertMatcher = INSERT_PATTERN.matcher(insertedStatement);
         Matcher updateMatcher = UPDATE_PATTERN.matcher(insertedStatement);
         Matcher deleteMatcher = DELETE_PATTERN.matcher(insertedStatement);
+        Matcher createMatcher = CREATE_PATTERN.matcher(insertedStatement);
+        Matcher dropMatcher = DROP_PATTERN.matcher(insertedStatement);
         this.statementParameters = new ArrayList<String>();
 
         if (selectMatcher.matches()) {
@@ -41,6 +47,13 @@ class StatementMatcher {
             this.statementType = "DELETE";
             this.statementParameters.add(deleteMatcher.group(1)); // tableName
             this.statementParameters.add(deleteMatcher.group(2)); // condition
+        } else if (createMatcher.matches()) {
+            this.statementType = "CREATE";
+            this.statementParameters.add(createMatcher.group(1)); // tableName
+            this.statementParameters.add(createMatcher.group(2)); // headers
+        } else if (dropMatcher.matches()){
+            this.statementType = "DROP";
+            this.statementParameters.add(dropMatcher.group(1));
         } else {
             throw new InvalidSQLStatementException("Error: Inserted SQL statement is invalid.", insertedStatement);
         }

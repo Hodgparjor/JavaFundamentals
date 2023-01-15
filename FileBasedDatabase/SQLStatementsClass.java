@@ -1,4 +1,5 @@
 package FileBasedDatabase;
+import java.io.File;
 import java.util.*;
 
 abstract class SQLStatement {
@@ -21,13 +22,19 @@ class SelectStatement extends SQLStatement {
         this.conditions = conditions;
     }
 
-    ArrayList<Integer> matchIndexes(String[] inputColumns, String[] tableColumns) {
+    ArrayList<Integer> matchIndexes(String[] inputColumns, String[] tableColumns) throws InvalidSQLStatementException {
         ArrayList<Integer> matchingIndexes = new ArrayList<Integer>();
+        boolean matchFound;
         for (int indexInput = 0; indexInput < inputColumns.length; indexInput++) {
+            matchFound = false;
             for (int indexTable = 0; indexTable < tableColumns.length; indexTable++) {
                 if (inputColumns[indexInput].equals(tableColumns[indexTable]) || inputColumns[0].equals("*")) {
                     matchingIndexes.add(indexTable);
+                    matchFound = true;
                 }
+            }
+            if(!matchFound) {
+                throw new InvalidSQLStatementException("Error: Column " + inputColumns[indexInput] + " is not in table headers.", inputColumns[indexInput]);
             }
         }
         return matchingIndexes;
@@ -162,7 +169,7 @@ class UpdateStatement extends SQLStatement {
                 return index;
             }
         }
-        throw new InvalidSQLStatementException(columnName + "is not in table headers.", columnName);
+        throw new InvalidSQLStatementException("Error: Column " + columnName + " is not in table headers.", columnName);
     }
 }
 
@@ -263,6 +270,55 @@ class WhereKeyword {
                 return index;
             }
         }
-        throw new InvalidSQLStatementException("Error: " + columnName + " is not in table headers.", columnName);
+        throw new InvalidSQLStatementException("Error: Column" + columnName + " is not in table headers.", columnName);
+    }
+}
+
+class CreateStatement extends SQLStatement {
+    private static final String FILE_SUFFIX = ".txt";
+    private static final String LOCATION = "FileBasedDatabase\\";
+    private String headers;
+
+    public CreateStatement(String tableName, String headers) {
+        this.tableName = tableName;
+        this.headers = headers;
+    }
+
+    @Override
+    public void executeStatement() throws InvalidSQLStatementException {
+        checkFile(tableName);
+        textFileWriter writer = new textFileWriter(LOCATION + tableName + FILE_SUFFIX, false);
+        writer.writeLine(this.headers.trim());
+        writer.closeIO();
+    }
+
+    private void checkFile(String tableName) throws InvalidSQLStatementException{
+        File file = new File(LOCATION + tableName + FILE_SUFFIX);
+        if (file.exists()) {
+            throw new InvalidSQLStatementException("Error: Table " + tableName + " already exists.", tableName);
+        }
+    }
+}
+
+class DropStatement extends SQLStatement {
+    private static final String FILE_SUFFIX = ".txt";
+    private static final String LOCATION = "FileBasedDatabase\\";
+
+    public DropStatement(String tableName) {
+        this.tableName = tableName;
+    }
+
+    @Override
+    public void executeStatement() throws InvalidSQLStatementException {
+        checkFile(tableName);
+        File tableToDrop = new File(LOCATION + tableName + FILE_SUFFIX);
+        tableToDrop.delete();
+    }
+
+    private void checkFile(String tableName) throws InvalidSQLStatementException{
+        File file = new File(LOCATION + tableName + FILE_SUFFIX);
+        if (!file.exists()) {
+            throw new InvalidSQLStatementException("Error: Table " + tableName + " doesn't exist.", tableName);
+        }
     }
 }

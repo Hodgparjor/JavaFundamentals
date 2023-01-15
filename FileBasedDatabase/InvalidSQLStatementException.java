@@ -1,14 +1,14 @@
 package FileBasedDatabase;
 
 public class InvalidSQLStatementException extends Exception {
-    private String invalidStatement;
+    private String invalidData;
 
     public InvalidSQLStatementException(String message, String statement) {
         super(message);
-        this.invalidStatement = statement;
+        this.invalidData = statement;
     }
 
-    public String getInvalidStatement() {
-        return this.invalidStatement;
+    public String getInvalidData() {
+        return this.invalidData;
     }
 }
