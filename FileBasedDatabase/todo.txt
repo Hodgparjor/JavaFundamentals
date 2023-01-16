@@ -1,2 +1,0 @@
-- Empty table check
-- Columns don't match exception

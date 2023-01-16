@@ -1,0 +1,8 @@
+type,amount,price
+soccer,51,99
+baseball,18,74
+pool,94,13
+voleyball,43,32
+golf,0,9
+medical,6,114
+playball,51,9

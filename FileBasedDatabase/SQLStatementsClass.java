@@ -13,7 +13,7 @@ class SelectStatement extends SQLStatement {
     private String columns;
     private String conditions;
     private static final String FILE_SUFFIX = ".txt";
-    private static final String LOCATION = "FileBasedDatabase\\";
+    private static final String LOCATION = "FileBasedDatabase\\tables\\";
 
     public SelectStatement(String tableName, String columns, String conditions) {
         this.statementType = "SELECT";
@@ -28,7 +28,7 @@ class SelectStatement extends SQLStatement {
         for (int indexInput = 0; indexInput < inputColumns.length; indexInput++) {
             matchFound = false;
             for (int indexTable = 0; indexTable < tableColumns.length; indexTable++) {
-                if (inputColumns[indexInput].equals(tableColumns[indexTable]) || inputColumns[0].equals("*")) {
+                if ((inputColumns[indexInput].trim()).equals(tableColumns[indexTable].trim()) || inputColumns[0].equals("*")) {
                     matchingIndexes.add(indexTable);
                     matchFound = true;
                 }
@@ -69,7 +69,7 @@ class SelectStatement extends SQLStatement {
 class InsertStatement extends SQLStatement {
     private String values;
     private static final String FILE_SUFFIX = ".txt";
-    private static final String LOCATION = "FileBasedDatabase\\";
+    private static final String LOCATION = "FileBasedDatabase\\tables\\";
 
     public InsertStatement(String tableName, String values) {
         this.statementType = "INSERT";
@@ -106,7 +106,7 @@ class UpdateStatement extends SQLStatement {
     private String updates;
     private String conditions;
     private static final String FILE_SUFFIX = ".txt";
-    private static final String LOCATION = "FileBasedDatabase\\";
+    private static final String LOCATION = "FileBasedDatabase\\tables\\";
 
     public UpdateStatement(String tableName, String updates, String conditions) {
         this.statementType = "UPDATE";
@@ -176,7 +176,7 @@ class UpdateStatement extends SQLStatement {
 class DeleteStatement extends SQLStatement {
     private String conditions;
     private static final String FILE_SUFFIX = ".txt";
-    private static final String LOCATION = "FileBasedDatabase\\";
+    private static final String LOCATION = "FileBasedDatabase\\tables\\";
 
     public DeleteStatement(String tableName, String conditions) {
         this.statementType = "DELETE";
@@ -276,7 +276,7 @@ class WhereKeyword {
 
 class CreateStatement extends SQLStatement {
     private static final String FILE_SUFFIX = ".txt";
-    private static final String LOCATION = "FileBasedDatabase\\";
+    private static final String LOCATION = "FileBasedDatabase\\tables\\";
     private String headers;
 
     public CreateStatement(String tableName, String headers) {
@@ -302,7 +302,7 @@ class CreateStatement extends SQLStatement {
 
 class DropStatement extends SQLStatement {
     private static final String FILE_SUFFIX = ".txt";
-    private static final String LOCATION = "FileBasedDatabase\\";
+    private static final String LOCATION = "FileBasedDatabase\\tables\\";
 
     public DropStatement(String tableName) {
         this.tableName = tableName;
